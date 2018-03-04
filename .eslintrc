@@ -1,0 +1,32 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "node": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true,
+            "experimentalObjectRestSpread": true,
+            "spread": true
+        },
+        "ecmaVersion": 6
+    },
+    "rules": {
+        "semi": [
+            2,
+            "always"
+        ],
+        "indent": [
+            "error",
+            4
+        ]
+    }
+}
