@@ -1,0 +1,9 @@
+
+.ship-board-unit {
+    display: flex;
+}
+
+.ship-board-unit img {
+    max-width: 100%;
+    padding: 10px 0;
+}
