@@ -9,12 +9,14 @@ class ShipsBoard extends PureComponent {
     generateShips = () => {
         const { shipTypes } = this.props;
         const array = [];
+        console.log(shipTypes);
         for (const key in shipTypes) {
             if (shipTypes.hasOwnProperty(key)) {
                 array.push(<ShipBoardUnit
                     key={key}
                     count={shipTypes[key].count}
                     size={shipTypes[key].size}
+                    isSunk={shipTypes[key].size === (shipTypes[key].positions && shipTypes[key].positions.length)}
                     type={key}
                 />);
             }
@@ -32,7 +34,7 @@ class ShipsBoard extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-    shipTypes: state.ships.shipTypes,
+    shipTypes: state.cloneShips,
 });
 
 export default connect(mapStateToProps)(ShipsBoard);

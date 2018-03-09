@@ -8,34 +8,69 @@ import Submarine from '../../assets/Submarine Shape.png';
 import Hit from '../../assets/Hit small.png';
 import Miss from '../../assets/Miss small.png';
 import './style.css';
+import { addPlayerInfo } from '../../actions/players';
+import { connect } from 'react-redux';
 
-export default class ShipBoardUnit extends PureComponent {
-    render() {
-        let img;
-        switch (this.props.type) {
-            case 'carrier':
-                img = Carrier;
-                break;
-            case 'battleship':
-                img = Battleship;
-                break;
-            case 'cruiser':
-                img = Cruiser;
-                break;
-            case 'submarine':
-                img = Submarine;
-                break;
-            case 'destroyer':
-                img = Aircraft;
-                break;
-            default:
-                img = Carrier;
-                break;
+class ShipBoardUnit extends PureComponent {
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isSunk && nextProps.isSunk !== this.props.isSunk) {
+            this.props.addInfo({
+                player1: {
+                    ...this.props.playerBoard.player1,
+                    score: this.props.playerBoard.player1.score + 1
+                }
+            });
         }
+    }
+
+    getShip = type => {
+        switch (type) {
+            case 'carrier':
+                return Carrier;
+            case 'battleship':
+                return Battleship;
+            case 'cruiser':
+                return Cruiser;
+            case 'submarine':
+                return Submarine;
+            case 'destroyer':
+                return Aircraft;
+            default:
+                return Carrier;
+        }
+    };
+
+    getShipState = ({ size, isSunk }) => {
+        return [ ...Array(size) ].map((one, i) => {
+            return isSunk
+                ? <img src={Hit} alt="" key={i}/>
+                : <img src={Miss} alt="" key={i}/>;
+        });
+    };
+
+    render() {
         return (
             <div className="ship-board-unit">
-                <img src={img} alt=""/>
+                <img src={this.getShip(this.props.type)} alt=""/>
+                <div className="ship-state">
+                    {
+                        this.getShipState(this.props)
+                    }
+                </div>
             </div>
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    playerBoard: state.playerBoard
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    addInfo: playerInfo => addPlayerInfo(dispatch, playerInfo)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShipBoardUnit);
+
+
