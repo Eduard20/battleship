@@ -4,7 +4,7 @@
   "private": true,
   "author": "Eduard Simonyan",
   "dependencies": {
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.21",
     "md5": "^2.2.1",
     "prop-types": "^15.6.1",
     "react": "17.0.1",
